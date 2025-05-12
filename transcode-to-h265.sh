@@ -40,12 +40,12 @@ for infile in "$INPUT_DIR"/*"$INPUT_EXT"; do
     # First pass
     ffmpeg -y -i "$infile" $SCALE_FILTER \
         -c:v libx265 -b:v "$BITRATE" \
-        -x265-params "pass=1:stats=$log_file" -preset veryslow -an -f null /dev/null
+        -x265-params "pass=1:stats=$log_file" -preset slower -an -f null /dev/null
 
     # Second pass
     ffmpeg -i "$infile" $SCALE_FILTER \
         -c:v libx265 -b:v "$BITRATE" \
-        -x265-params "pass=2:stats=$log_file" -preset veryslow -c:a copy -c:s copy "$outfile"
+        -x265-params "pass=2:stats=$log_file" -preset slower -c:a copy -c:s copy "$outfile"
 
     rm -f "$log_file"
     echo "Finished: $outfile"
